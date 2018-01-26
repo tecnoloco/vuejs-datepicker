@@ -38,12 +38,14 @@
               <span
                   @click="isRtl ? nextMonth() : previousMonth()"
                   class="prev"
-                  v-bind:class="{ 'disabled' : isRtl ? nextMonthDisabled(pageTimestamp) : previousMonthDisabled(pageTimestamp) }">&lt;</span>
+                  v-bind:class="{ 'disabled' : isRtl ? nextMonthDisabled(pageTimestamp) : previousMonthDisabled(pageTimestamp) }"
+                  v-html="prevHtml">&lt;</span>
               <span @click="showMonthCalendar" :class="allowedToShowView('month') ? 'up' : ''">{{ isYmd ? currYear : currMonthName }} {{ isYmd ? currMonthName : currYear }}</span>
               <span
                   @click="isRtl ? previousMonth() : nextMonth()"
                   class="next"
-                  v-bind:class="{ 'disabled' : isRtl ? previousMonthDisabled(pageTimestamp) : nextMonthDisabled(pageTimestamp) }">&gt;</span>
+                  v-bind:class="{ 'disabled' : isRtl ? previousMonthDisabled(pageTimestamp) : nextMonthDisabled(pageTimestamp) }"
+                  v-html="nextHtml">&gt;</span>
           </header>
           <div :class="isRtl ? 'flex-rtl' : ''">
             <span class="cell day-header" v-for="d in daysOfWeek" :key="d.timestamp">{{ d }}</span>
@@ -157,7 +159,9 @@ export default {
     maximumView: {
       type: String,
       default: 'year'
-    }
+    },
+    prevHtml: String,
+    nextHtml: String
   },
   data () {
     const startDate = this.openDate ? new Date(this.openDate) : new Date()
